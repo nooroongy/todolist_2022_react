@@ -38,9 +38,9 @@ const Filter = ({ setter, data, filter: { match, indcudes } }) => {
     }
 
     return <>
-        <span>완료되지 않은 목록만 보기</span>
-        <input value={completeCheck} type='checkbox' onChange={onChangeCompleteCheckbox}></input>
-        <input className="search__input" value={searchValue} onChange={onChangeSearchInput}></input>
+        <span className="filter__checkbox_label" >완료전</span>
+        <input className="filter__checkbox" value={completeCheck} type='checkbox' onChange={onChangeCompleteCheckbox}></input>
+        <input className="filter__input" value={searchValue} onChange={onChangeSearchInput}></input>
     </>
 }
 

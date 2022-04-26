@@ -10,6 +10,7 @@ const Home = () => {
         indcudes: ['title'],
     }
     const getTodoNameFromId = id => todos.find(todo => todo.id === id)?.title;
+    const [showModal, setShowModal] = useState(false);
 
     const [todos, setTodos] = useState([
         { complete: true, id: 1, title: '청소하기', tags: [3, 5, 6], created_at: '20220401', updated_at: '20220421' },
@@ -34,7 +35,7 @@ const Home = () => {
             <button className="search__btn">Add Todo</button>
         </div>
         {filteredTodos.map(todo => <Todo key={todo.id} {...todo} getTodoNameFromId={getTodoNameFromId}></Todo>)}
-        <Modal>
+        <Modal show={showModal}>
             <AddTodo></AddTodo>
         </Modal>
     </>

@@ -11,10 +11,10 @@ const Todo = ({ id, title, tags = [], created_at, updated_at, datas, getTodoName
             </span>
         </span>
         <span className="todo__date_wrap">
-            <span className="todo__date_updated"></span>
-            <span className="todo__date_created"></span>
+            <div className="todo__date_updated"><span>update </span>{updated_at}</div>
+            <div className="todo__date_created"><span>create </span>{created_at}</div>
         </span>
-        <i className="todo__delete">{id}</i>
+        <i className="todo__delete">delete</i>
     </div>
 }
 
