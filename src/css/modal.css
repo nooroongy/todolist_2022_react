@@ -1,0 +1,22 @@
+.modal__wrap{
+    background: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    width: 75vw;
+    left: 12.5vw;
+    box-shadow: 0 0 7px 3px #0000001c;
+    display: none;
+}
+
+.modal__closeBtn{
+    border: none;
+    background: none;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 1.5em;
+}
+.modal__open{
+    display: block;
+}
