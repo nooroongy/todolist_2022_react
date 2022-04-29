@@ -1,0 +1,52 @@
+.addTodo__wrap{
+    display: grid;
+    text-align: center;
+    padding: 50px;
+}
+.addTodo__title{
+    font-weight: 700;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+.addTodo__tags{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.addTodo__tag{
+    background-color: #97a2a9;
+    margin: 5px;
+    padding: 7px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: white;
+    font-size: 0.7em;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.addTodo__tag_selected{
+    background-color: #1b98db;
+}
+
+.addTodo__input{
+    border: none;
+    border-bottom: 1px solid black;
+    width: 40vw;
+    margin: 0 auto;
+}
+
+.addTodo__button{
+    width: 22vw;
+    margin: 0 auto;
+    height: 50px;
+    margin-top: 40px;
+    border: none;
+    background: #3798eb;
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1.3em;
+}

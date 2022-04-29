@@ -3,29 +3,20 @@ import Modal from "../components/Modal";
 import Filter from "../components/Filter";
 import AddTodo from "./AddTodo";
 import Paging from "../components/Paging";
+import EditTodo from "./EditTodo";
 
 const Home = () => {
     const FILTER = {
         match: ['complete', 'updated_at'],
-        indcudes: ['title'],
+        includes: ['title'],
     }
     const getTodoNameFromId = id => todos.find(todo => todo.id === id)?.title;
     const [showModal, setShowModal] = useState(false);
+    const [modalInfo, setModalInfo] = useState('add')
+    const [selectedTodo, setSelectedTodo] = useState({})
 
     const [todos, setTodos] = useState([
         { complete: false, id: 1, title: '청소하기', tags: [3, 5, 6], created_at: '20220401', updated_at: '20220421' },
-<<<<<<< HEAD
-        // { complete: false, id: 2, title: '공부하기', tags: [], created_at: '20220402', updated_at: '20220416' },
-        // { complete: false, id: 3, title: '책상치우기', tags: [2], created_at: '20220403', updated_at: '20220414' },
-        // { complete: false, id: 4, title: '설거지하기', tags: [], created_at: '20220404', updated_at: '20220416' },
-        // { complete: true, id: 5, title: '쓰레기버리기', tags: [2], created_at: '20220405', updated_at: '20220421' },
-        // { complete: false, id: 6, title: '물걸레질하기', tags: [2], created_at: '20220406', updated_at: '20220418' },
-        // { complete: false, id: 7, title: '점심먹기', tags: [], created_at: '20220406', updated_at: '20220418' },
-        // { complete: false, id: 8, title: '집에 가는길에 병원들리기', tags: [], created_at: '20220406', updated_at: '20220418' },
-        // { complete: false, id: 9, title: '운동하기', tags: [], created_at: '20220406', updated_at: '20220418' },
-        // { complete: false, id: 10, title: '세수하기', tags: [6], created_at: '20220406', updated_at: '20220418' },
-        // { complete: false, id: 11, title: '세수하기', tags: [6], created_at: '20220406', updated_at: '20220418' },
-=======
         { complete: false, id: 2, title: '공부하기', tags: [], created_at: '20220402', updated_at: '20220416' },
         { complete: false, id: 3, title: '책상치우기', tags: [2], created_at: '20220403', updated_at: '20220414' },
         { complete: false, id: 4, title: '설거지하기', tags: [], created_at: '20220404', updated_at: '20220416' },
@@ -36,16 +27,10 @@ const Home = () => {
         { complete: false, id: 9, title: '운동하기', tags: [], created_at: '20220406', updated_at: '20220418' },
         { complete: false, id: 10, title: '세수하기', tags: [6], created_at: '20220406', updated_at: '20220418' },
         { complete: false, id: 11, title: '음식물쓰레기 버리기', tags: [5], created_at: '20220406', updated_at: '20220418' },
->>>>>>> 1475b2312c56495a6e982d90efc5c68488be2f16
     ])
 
     const [filteredTodos, setFilteredTodos] = useState(todos)
 
-<<<<<<< HEAD
-    const showAddTodoModal = () => {
-        setShowModal(true)
-    }
-=======
     const todoModiftCallback = (data) => {
         setTodos(res => {
             return res.map(todo => {
@@ -57,30 +42,81 @@ const Home = () => {
     const todoDeleteCallback = (id) => {
         setTodos(res => res.filter(todo => todo.id !== id))
     }
+    const todoeditCallback = id => {
+        setSelectedTodo(todos.find(todo => todo.id === id))
+        setModalInfo('edit')
+        console.log(modalInfo)
+        setShowModal(true)
+    }
+
+    const todoConfirmComplete = tags => {
+        const beforeCompleteTags = todos
+            .filter(todo => tags.includes(todo.id))
+            .filter(todo => !todo.complete)
+            .map(todo => todo.title)
+        return {
+            confirm: beforeCompleteTags.length > 0 ? false : true,
+            callback: () => { alert(`${beforeCompleteTags.join(',')}을 먼저 완료해주세요`) }
+        };
+    }
 
     const sortByComplete = todos => todos.sort(todo => todo.complete ? 1 : -1)
->>>>>>> 1475b2312c56495a6e982d90efc5c68488be2f16
+
+    const showAddTodoModal = () => {
+        setModalInfo('add')
+        setShowModal(true)
+    }
+
+    const addCallback = ({ tags, title }) => {
+        const now = new Date();
+        const today = `${now.getFullYear()}${(now.getMonth() + 1 + '').padStart(2, 0)}${(now.getDate() + '').padStart(2, 0)}`
+
+        setShowModal(false)
+        setTodos(res => [...res, {
+            complete: false,
+            id: res.length + 1,
+            title,
+            tags,
+            created_at: today,
+            updated_at: today
+        }])
+    }
+
+    const editCallback = ({ tags, title, id }) => {
+        const now = new Date();
+        const today = `${now.getFullYear()}${(now.getMonth() + 1 + '').padStart(2, 0)}${(now.getDate() + '').padStart(2, 0)}`
+
+        setShowModal(false)
+        setTodos(res => res.map(todo => {
+            return todo.id === id ? {
+                ...todo,
+                title,
+                tags,
+                updated_at: today
+            } : todo
+        }))
+    }
 
     return <>
         <div className="search__wrap">
             <Filter data={todos} filter={FILTER} setter={setFilteredTodos}></Filter>
             <button className="search__btn" onClick={showAddTodoModal}>Add Todo</button>
         </div>
-<<<<<<< HEAD
-        {filteredTodos.map(todo => <Todo key={todo.id} {...todo} getTodoNameFromId={getTodoNameFromId}></Todo>)}
-        <Modal show={showModal} setter={setShowModal}>
-=======
         <Paging
-            itemPerPage={5}
+            itemPerPage={7}
             datas={sortByComplete(filteredTodos)}
             dataProps={{
                 modiftCallback: todoModiftCallback,
                 deleteCallback: todoDeleteCallback,
+                editCallback: todoeditCallback,
+                confirmComplete: todoConfirmComplete,
                 getTodoNameFromId
             }}></Paging>
-        <Modal show={showModal} showSetter={setShowModal}>
->>>>>>> 1475b2312c56495a6e982d90efc5c68488be2f16
-            <AddTodo></AddTodo>
+        <Modal show={showModal} setter={setShowModal}>
+            {
+                modalInfo === 'add' ? <AddTodo todos={todos} addCallback={addCallback}></AddTodo> :
+                    <EditTodo todos={todos} todo={selectedTodo} editCallback={editCallback}></EditTodo>
+            }
         </Modal>
     </>
 }

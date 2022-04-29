@@ -1,7 +1,7 @@
 
 .todo__wrap{
     display: grid;
-    grid-template-columns: 1fr 18fr 6fr 1fr;
+    grid-template-columns: 1fr 17fr 5fr 1fr 1fr;
     background: #ffffff;
     margin: 17px 0;
     padding: 15px;
@@ -15,6 +15,11 @@
 .todo__delete{
     font-size: 1.6em;
     color: #a9a9a9;
+}
+
+.todo__edit{
+    font-size: 1.6em;
+    color: #5c98d5;
 }
 
 .todo__date_wrap{
@@ -47,6 +52,10 @@
     font-family: 'Noto Sans KR';
     font-weight: 400;
     margin-left: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-width: 60px;
 }
 
 .todo__tag:hover{
@@ -56,6 +65,8 @@
 .todo__tags{
     margin-left: 10px;
     display: inline-flex;
+    max-width: 30vw;
+    overflow: hidden;
 }
 
 .todo__title{

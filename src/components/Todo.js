@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react";
 
-const Todo = ({ complete,id, title, tags = [], created_at, updated_at, getTodoNameFromId, modiftCallback=()=>{}, deleteCallback=()=>{} }) => {
+const Todo = ({ complete, id, title, tags = [], created_at, updated_at, getTodoNameFromId, modiftCallback = () => { }, deleteCallback = () => { }, confirmComplete = () => { } ,editCallback =()=>{}}) => {
     const [isComplete, setIsComplete] = useState(false);
-    useEffect(()=>{
+    useEffect(() => {
         setIsComplete(complete)
-    },[])
+    }, [])
 
-    function onClickDeleteBtn (){
+    function onClickDeleteBtn() {
         deleteCallback(id)
     }
-
-    function onChangeComplete ({target:{checked}}){
-        setIsComplete(checked);
-        modiftCallback({id,complete:checked})
+    function onClickEditBtn() {
+        editCallback(id)
     }
 
-    return <div className={`todo__wrap ${isComplete ? 'todo__complete' : ''}` }>
+    function onChangeComplete({ target: { checked } }) {
+        const { confirm, callback=()=>{} } = confirmComplete(tags);
+        console.log(confirm)
+        if (confirm) {
+            setIsComplete(checked);
+            modiftCallback({ id, complete: checked })
+        } else {
+            callback()
+        }
+    }
+
+    return <div className={`todo__wrap ${isComplete ? 'todo__complete' : ''}`}>
         <input className="todo__input" type='checkbox' onChange={onChangeComplete} checked={isComplete}></input>
         <span className="todo__title">{title}
             <span className="todo__tags">
@@ -26,6 +35,7 @@ const Todo = ({ complete,id, title, tags = [], created_at, updated_at, getTodoNa
             <div className="todo__date_updated"><span>update </span>{updated_at}</div>
             <div className="todo__date_created"><span>create </span>{created_at}</div>
         </span>
+        <i className="todo__edit" onClick={onClickEditBtn}>edit</i>
         <i className="todo__delete" onClick={onClickDeleteBtn}>delete</i>
     </div>
 }

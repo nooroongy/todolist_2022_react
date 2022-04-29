@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-const Filter = ({ setter, data, filter: { match, indcudes } }) => {
+const Filter = ({ setter, data, filter: { match, includes } }) => {
     const arrayToObject = array => array.reduce((result, item) => ({ ...result, [item]: '' }), {})
     const [matchFilters, setMatchFilters] = useState(arrayToObject(match));
-    const [includesfilters, setIncludeFilters] = useState(arrayToObject(indcudes));
+    const [includesfilters, setIncludeFilters] = useState(arrayToObject(includes));
     const [searchValue, setSearchValue] = useState('')
     const [completeCheck, setCompleteCheck] = useState(false)
 
@@ -13,13 +13,13 @@ const Filter = ({ setter, data, filter: { match, indcudes } }) => {
 
     const filteringData = datas => {
         const filters = [
-            ...indcudes.map(filter => ({ type: 'indcudes', key: filter, value: includesfilters[filter] })),
+            ...includes.map(filter => ({ type: 'includes', key: filter, value: includesfilters[filter] })),
             ...match.map(filter => ({ type: 'match', key: filter, value: matchFilters[filter] }))]
         return getFilteringData({ datas, filters })
     }
 
     const getFilteringData = ({ datas, filters }) => filters.reduce((result, { key, value, type }) => {
-        return type === 'indcudes' ?
+        return type === 'includes' ?
             result.filter(data => includeFilter(data[key])(value)) :
             result.filter(data => matchFilter(data[key])(value))
     }, datas)

@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const AddTodo = ({ todos, addCallback }) => {
+const EditTodo = ({ todo, todos, editCallback }) => {
     const [tags, setTags] = useState([])
     const [title, setTittle] = useState('')
+
+    useEffect(() => {
+        const { tags, title } = todo;
+        setTags(tags)
+        setTittle(title)
+    }, [todo]);
 
     function onClickTag(id) {
         setTags(res => {
@@ -10,8 +16,8 @@ const AddTodo = ({ todos, addCallback }) => {
         })
     }
 
-    function onClickAddButton() {
-        addCallback({ title, tags })
+    function onClickeditButton() {
+        editCallback({ title, tags, id: todo.id })
         setTags([])
         setTittle('')
     }
@@ -29,8 +35,8 @@ const AddTodo = ({ todos, addCallback }) => {
                 onClick={() => { onClickTag(todo.id) }}
                 className={`addTodo__tag ${tags.includes(todo.id) ? 'addTodo__tag_selected' : ''}`}>{todo.title}</span>)}
         </div>
-        <button className="addTodo__button" onClick={onClickAddButton}>Add Todo!</button>
+        <button className="addTodo__button" onClick={onClickeditButton}>Edit Todo</button>
     </div>
 }
 
-export default AddTodo;
+export default EditTodo;
