@@ -9,7 +9,7 @@ const Filter = ({ setter, data, filter: { match, indcudes } }) => {
 
     useEffect(() => {
         setter(filteringData(data))
-    }, [searchValue, completeCheck]);
+    }, [searchValue, completeCheck, data]);
 
     const filteringData = datas => {
         const filters = [

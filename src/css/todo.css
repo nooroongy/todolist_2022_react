@@ -70,3 +70,8 @@
     border-radius: 5px;
     border: none;
 }
+
+
+.todo__wrap.todo__complete{
+    opacity: 0.5;
+}

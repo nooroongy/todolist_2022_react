@@ -1,4 +1,5 @@
 .modal__wrap{
+<<<<<<< HEAD
     background: white;
     height: 100vh;
     position: fixed;
@@ -18,5 +19,11 @@
     font-size: 1.5em;
 }
 .modal__open{
+=======
+    display: none;
+}
+
+.modal__wrap.modal__open{
+>>>>>>> 1475b2312c56495a6e982d90efc5c68488be2f16
     display: block;
 }
