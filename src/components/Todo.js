@@ -1,7 +1,11 @@
 import { useState } from "react";
 
-const Todo = ({ id, title, tags = [], created_at, updated_at, datas, getTodoNameFromId }) => {
+const Todo = ({ id, title, tags = [], created_at, updated_at, datas, getTodoNameFromId, modiftCallback=()=>{}, deleteCallback=()=>{} }) => {
     const [complete, setComplete] = useState(false);
+
+    function onClickDeleteBtn (){
+        deleteCallback(id)
+    }
 
     return <div className="todo__wrap">
         <input className="todo__input" type='checkbox'></input>
@@ -14,7 +18,7 @@ const Todo = ({ id, title, tags = [], created_at, updated_at, datas, getTodoName
             <div className="todo__date_updated"><span>update </span>{updated_at}</div>
             <div className="todo__date_created"><span>create </span>{created_at}</div>
         </span>
-        <i className="todo__delete">delete</i>
+        <i className="todo__delete" onClick={onClickDeleteBtn}>delete</i>
     </div>
 }
 

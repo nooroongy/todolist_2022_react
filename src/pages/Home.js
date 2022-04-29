@@ -28,14 +28,30 @@ const Home = () => {
 
     const [filteredTodos, setFilteredTodos] = useState(todos)
 
+    const todoModiftCallback = (data) => {
+        setTodos(res => {
+            res.map(todo => {
+                return todo.id === data.id ? data : todo
+            })
+        })
+    }
+
+    const todoDeleteCallback = (id) =>{
+        setTodos(res =>res.filter(todo=>todo.id !== id))
+        console.log(todos)
+    }
 
     return <>
         <div className="search__wrap">
             <Filter data={todos} filter={FILTER} setter={setFilteredTodos}></Filter>
             <button className="search__btn">Add Todo</button>
         </div>
-        {filteredTodos.map(todo => <Todo key={todo.id} {...todo} getTodoNameFromId={getTodoNameFromId}></Todo>)}
-        <Modal show={showModal}>
+        {filteredTodos.map(todo => <Todo key={todo.id} {...todo}
+            getTodoNameFromId={getTodoNameFromId}
+            modiftCallback={todoModiftCallback}
+            deleteCallback={todoDeleteCallback}
+            ></Todo>)}
+        <Modal show={showModal} showSetter={setShowModal}>
             <AddTodo></AddTodo>
         </Modal>
     </>
