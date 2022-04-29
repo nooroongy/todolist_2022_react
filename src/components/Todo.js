@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Todo = ({ id, title, tags = [], created_at, updated_at, datas, getTodoNameFromId, modiftCallback=()=>{}, deleteCallback=()=>{} }) => {
-    const [complete, setComplete] = useState(false);
+const Todo = ({ complete,id, title, tags = [], created_at, updated_at, getTodoNameFromId, modiftCallback=()=>{}, deleteCallback=()=>{} }) => {
+    const [isComplete, setIsComplete] = useState(false);
+    useEffect(()=>{
+        setIsComplete(complete)
+    },[])
 
     function onClickDeleteBtn (){
         deleteCallback(id)
     }
 
-    return <div className="todo__wrap">
-        <input className="todo__input" type='checkbox'></input>
+    function onChangeComplete ({target:{checked}}){
+        setIsComplete(checked);
+        modiftCallback({id,complete:checked})
+    }
+
+    return <div className={`todo__wrap ${isComplete ? 'todo__complete' : ''}` }>
+        <input className="todo__input" type='checkbox' onChange={onChangeComplete} checked={isComplete}></input>
         <span className="todo__title">{title}
             <span className="todo__tags">
                 {tags.map(tag => <span key={tag} className="todo__tag">@{getTodoNameFromId(tag)}</span>)}
